@@ -68,6 +68,33 @@ body {
   margin-top: 0;
 }
 
+.cp-about h2 {
+  margin: 0 0 10px;
+  font-size: 20px;
+}
+
+.cp-about h3 {
+  margin: 20px 0 8px;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: left;
+}
+
+.cp-about h4 {
+  margin: 14px 0 6px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.cp-about p {
+  margin: 0 0 8px;
+}
+
+.cp-about ul {
+  margin: 0 0 10px;
+  padding-left: 20px;
+}
+
 .detail-body {
   background: #fff;
   color: #111827;
