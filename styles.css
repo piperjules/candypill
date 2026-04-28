@@ -1,0 +1,121 @@
+:root {
+  color-scheme: dark;
+  --bg: #0a0a12;
+  --panel: #11111e;
+  --text: #f5f7ff;
+  --muted: #b8bfd6;
+  --accent: #ff4cb7;
+  --accent-2: #5ce1ff;
+  --border: #2b2b3d;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: radial-gradient(circle at top right, #1d0f2c, var(--bg) 45%);
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: blur(10px);
+  background: rgb(10 10 18 / 85%);
+  border-bottom: 1px solid var(--border);
+  padding: 1rem 1.25rem;
+}
+
+h1 {
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  list-style: none;
+  margin: 0.75rem 0 0;
+  padding: 0;
+}
+
+nav a {
+  color: var(--muted);
+  text-decoration: none;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.9rem;
+}
+
+nav a:hover {
+  color: var(--text);
+  border-color: var(--accent-2);
+}
+
+main {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 1.25rem;
+}
+
+.intro {
+  margin-bottom: 2rem;
+}
+
+.gallery-section {
+  margin-bottom: 2.5rem;
+}
+
+h2 {
+  margin-bottom: 1rem;
+  border-left: 4px solid var(--accent);
+  padding-left: 0.65rem;
+}
+
+.art-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.art-card {
+  background: linear-gradient(160deg, #151528, var(--panel));
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin: 0;
+  overflow: hidden;
+  color: var(--text);
+}
+
+.art-card img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+}
+
+.art-card figcaption {
+  padding: 0.65rem 0.75rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.site-footer {
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  text-align: center;
+  padding: 1.4rem 1rem 2.4rem;
+}
