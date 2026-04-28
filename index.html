@@ -530,7 +530,7 @@
       }
       function setActive(btn) {
         buttons.forEach((b) => b.classList.remove('active-filter'));
-        btn.classList.add('active-filter');
+        if (btn) btn.classList.add('active-filter');
       }
       function apply(filter) {
         cards.forEach((card) => {
@@ -539,8 +539,14 @@
       }
       buttons.forEach((btn) => {
         btn.addEventListener('click', () => {
-          setActive(btn);
-          apply(btn.dataset.filter);
+          const isActive = btn.classList.contains('active-filter');
+          if (isActive) {
+            setActive(null);
+            apply('all');
+          } else {
+            setActive(btn);
+            apply(btn.dataset.filter);
+          }
           syncGalleryOffset();
         });
       });
