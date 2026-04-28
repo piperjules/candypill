@@ -516,6 +516,18 @@
 
       const buttons = document.querySelectorAll('.filter-btn');
       const cards = document.querySelectorAll('.artwork');
+      const fixedHeader = document.querySelector('header.fixed');
+      const fixedFilters = document.querySelector('.fixed.top-20');
+      const gallerySection = document.querySelector('.pt-32');
+
+      function syncGalleryOffset() {
+        const headerH = fixedHeader ? fixedHeader.offsetHeight : 0;
+        const filtersH = fixedFilters ? fixedFilters.offsetHeight : 0;
+        const safeGap = 18;
+        if (gallerySection) {
+          gallerySection.style.paddingTop = `${headerH + filtersH + safeGap}px`;
+        }
+      }
       function setActive(btn) {
         buttons.forEach((b) => b.classList.remove('active-filter'));
         btn.classList.add('active-filter');
@@ -529,9 +541,13 @@
         btn.addEventListener('click', () => {
           setActive(btn);
           apply(btn.dataset.filter);
+          syncGalleryOffset();
         });
       });
       apply('all');
+      syncGalleryOffset();
+      window.addEventListener('resize', syncGalleryOffset);
+      window.addEventListener('load', syncGalleryOffset);
 
       const overlay = document.getElementById('modal-overlay');
       const body = document.getElementById('modal-body');
