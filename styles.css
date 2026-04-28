@@ -95,6 +95,16 @@ body {
   padding-left: 20px;
 }
 
+.about-layout {
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: 115px 24px 48px;
+}
+
+.about-music-links {
+  margin-top: 18px;
+}
+
 .detail-body {
   background: #fff;
   color: #111827;
