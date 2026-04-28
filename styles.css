@@ -23,6 +23,10 @@ body {
   transform: scale(1.015);
 }
 
+.pt-32 {
+  padding-top: 170px !important;
+}
+
 .detail-body {
   background: #fff;
   color: #111827;
