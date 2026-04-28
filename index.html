@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Candy Pill</title>
     <meta name="description" content="A showcase of artistic works by Piper Jules" />
     <link rel="stylesheet" href="./assets/fdba44fb78b772b2-51e687b4.css" />
@@ -11,34 +11,34 @@
   <body class="__className_81dec9">
     <main class="min-h-screen bg-white overflow-x-hidden">
       <header class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm">
-        <div class="flex items-center justify-between h-20 px-6 max-w-[1800px] mx-auto">
+        <div class="flex items-center justify-between h-16 sm:h-20 px-4 sm:px-6 max-w-[1800px] mx-auto">
           <a aria-label="About" href="/about/">
             <div class="relative w-10 h-10 rounded-full overflow-hidden">
               <img alt="About" class="object-cover" src="assets/images/About-icon-1UNoydvKkmDPldqEAepWb4taI4SiXr.png"/>
             </div>
           </a>
           <a class="absolute left-1/2 transform -translate-x-1/2" href="/">
-            <img alt="Candy Pill" class="h-12 w-auto" src="assets/images/candypill-logo-new.png"/>
+            <img alt="Candy Pill" class="h-10 sm:h-12 w-auto max-w-[min(200px,55vw)]" src="assets/images/candypill-logo-new.png"/>
           </a>
           <div class="w-10 h-10"></div>
         </div>
       </header>
 
-      <div class="fixed top-20 left-0 right-0 z-30 bg-white/95 backdrop-blur-sm py-3 px-6">
-        <div class="flex flex-wrap gap-2 items-center justify-center max-w-[1800px] mx-auto">
-          <button class="text-xs px-4 py-1.5 rounded-full transition-all border bg-white text-gray-600 border-gray-300 hover:bg-gray-50 filter-btn" data-filter="cybergirl">Cybergirl</button>
-          <button class="text-xs px-4 py-1.5 rounded-full transition-all border bg-white text-gray-600 border-gray-300 hover:bg-gray-50 filter-btn" data-filter="characters">Characters</button>
-          <button class="text-xs px-4 py-1.5 rounded-full transition-all border bg-white text-gray-600 border-gray-300 hover:bg-gray-50 filter-btn" data-filter="play-on-space">Play on Space</button>
-          <button class="text-xs px-4 py-1.5 rounded-full transition-all border bg-white text-gray-600 border-gray-300 hover:bg-gray-50 filter-btn" data-filter="portals">Portals</button>
-          <button class="text-xs px-4 py-1.5 rounded-full transition-all border bg-white text-gray-600 border-gray-300 hover:bg-gray-50 filter-btn" data-filter="digital-alchemy">Digital Alchemy</button>
-          <button class="text-xs px-4 py-1.5 rounded-full transition-all border bg-white text-gray-600 border-gray-300 hover:bg-gray-50 filter-btn" data-filter="film">Film</button>
-          <button class="text-xs px-4 py-1.5 rounded-full transition-all border bg-white text-gray-600 border-gray-300 hover:bg-gray-50 filter-btn" data-filter="painting">Painting</button>
+      <div class="fixed left-0 right-0 z-30 bg-white/95 backdrop-blur-sm py-2 sm:py-3 px-3 sm:px-6 cp-filter-bar">
+        <div class="flex flex-wrap gap-1.5 sm:gap-2 items-center justify-center max-w-[1800px] mx-auto">
+          <button class="text-[11px] sm:text-xs px-3 sm:px-4 py-1.5 rounded-full transition-all border bg-white text-gray-600 border-gray-300 hover:bg-gray-50 filter-btn" data-filter="cybergirl">Cybergirl</button>
+          <button class="text-[11px] sm:text-xs px-3 sm:px-4 py-1.5 rounded-full transition-all border bg-white text-gray-600 border-gray-300 hover:bg-gray-50 filter-btn" data-filter="characters">Characters</button>
+          <button class="text-[11px] sm:text-xs px-3 sm:px-4 py-1.5 rounded-full transition-all border bg-white text-gray-600 border-gray-300 hover:bg-gray-50 filter-btn" data-filter="play-on-space">Play on Space</button>
+          <button class="text-[11px] sm:text-xs px-3 sm:px-4 py-1.5 rounded-full transition-all border bg-white text-gray-600 border-gray-300 hover:bg-gray-50 filter-btn" data-filter="portals">Portals</button>
+          <button class="text-[11px] sm:text-xs px-3 sm:px-4 py-1.5 rounded-full transition-all border bg-white text-gray-600 border-gray-300 hover:bg-gray-50 filter-btn" data-filter="digital-alchemy">Digital Alchemy</button>
+          <button class="text-[11px] sm:text-xs px-3 sm:px-4 py-1.5 rounded-full transition-all border bg-white text-gray-600 border-gray-300 hover:bg-gray-50 filter-btn" data-filter="film">Film</button>
+          <button class="text-[11px] sm:text-xs px-3 sm:px-4 py-1.5 rounded-full transition-all border bg-white text-gray-600 border-gray-300 hover:bg-gray-50 filter-btn" data-filter="painting">Painting</button>
         </div>
       </div>
 
-      <div class="pt-32 pb-24">
+      <div class="pt-32 pb-24 cp-home-main">
         <div class="container mx-auto px-4">
-          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6" id="gallery-grid">
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4 md:gap-6" id="gallery-grid">
           <div class="w-full artwork" data-category="digital-alchemy">
             <a class="block artwork-link" href="/artwork/transversive-media-01/" data-slug="transversive-media-01" aria-label="Digital Alchemy 01">
               <div class="relative aspect-square w-full overflow-hidden rounded-md">
@@ -541,8 +541,10 @@
     </main>
 
     <div id="modal-overlay" class="cp-modal-overlay" hidden>
+      <button type="button" id="modal-close" class="cp-close-og" aria-label="Close and return to gallery">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="cp-close-og-icon" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
       <div class="cp-modal" role="dialog" aria-modal="true" aria-label="Artwork details">
-        <button id="modal-close" class="cp-close" aria-label="Close">×</button>
         <div id="modal-body"></div>
       </div>
     </div>
@@ -554,13 +556,14 @@
       const buttons = document.querySelectorAll('.filter-btn');
       const cards = document.querySelectorAll('.artwork');
       const fixedHeader = document.querySelector('header.fixed');
-      const fixedFilters = document.querySelector('.fixed.top-20');
+      const fixedFilters = document.querySelector('.cp-filter-bar');
       const gallerySection = document.querySelector('.pt-32');
 
       function syncGalleryOffset() {
         const headerH = fixedHeader ? fixedHeader.offsetHeight : 0;
         const filtersH = fixedFilters ? fixedFilters.offsetHeight : 0;
         const safeGap = 18;
+        if (fixedFilters) fixedFilters.style.top = `${headerH}px`;
         if (gallerySection) {
           gallerySection.style.paddingTop = `${headerH + filtersH + safeGap}px`;
         }
@@ -571,7 +574,8 @@
       }
       function apply(filter) {
         cards.forEach((card) => {
-          card.style.display = filter === 'all' || card.dataset.category === filter ? '' : 'none';
+          const show = filter === 'all' || card.dataset.category === filter;
+          card.style.display = show ? '' : 'none';
         });
       }
       buttons.forEach((btn) => {
@@ -597,28 +601,35 @@
       const closeBtn = document.getElementById('modal-close');
 
       function detailsHtml(details) {
-        return Object.entries(details || {}).map(([k,v]) => `<li><strong>${k}:</strong> ${v}</li>`).join('');
+        return Object.entries(details || {})
+          .map(([k, v]) => `<div><dt class="text-sm text-gray-400 uppercase">${k}</dt><dd>${v}</dd></div>`)
+          .join('');
       }
 
       function openArtwork(slug, push=true) {
         const a = bySlug[slug];
         if (!a) return;
         const media = a.mediaType === 'video'
-          ? `<video controls playsinline class="detail-media" poster="${a.poster || ''}"><source src="${a.mediaUrl}" type="video/mp4" /></video>`
+          ? `<video controls playsinline class="object-contain max-h-[80vh] w-auto max-w-full" poster="${a.poster || ''}"><source src="${a.mediaUrl}" type="video/mp4" /></video>`
           : a.mediaType === 'youtube'
-            ? `<iframe class="detail-media detail-iframe" src="${a.mediaUrl}" title="${a.title}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`
-            : `<img src="${a.mediaUrl}" alt="${a.title}" class="detail-media" />`;
+            ? `<iframe class="cp-modal-youtube" src="${a.mediaUrl}" title="${a.title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+            : `<img src="${a.mediaUrl}" alt="${a.title}" class="object-contain max-h-[80vh] w-auto max-w-full" />`;
         body.innerHTML = `
-          <section class="detail-grid">
-            <div class="detail-image-wrap">${media}</div>
-            <article class="detail-meta">
-              <p class="detail-category">${a.category}</p>
-              <h1>${a.title}</h1>
-              <p class="detail-year">${a.year}</p>
-              <p>${a.description}</p>
-              <ul>${detailsHtml(a.details)}</ul>
-            </article>
-          </section>`;
+          <div class="container mx-auto px-4 pt-28 sm:pt-32 pb-10 sm:pb-12 max-w-5xl">
+            <div class="w-full mb-8 sm:mb-12 flex justify-center">
+              <div class="max-w-full max-h-[80vh] relative w-full flex justify-center">${media}</div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+              <div>
+                <h1 class="text-2xl font-light mb-2">${a.title}</h1>
+                <p class="text-gray-400">${a.year}</p>
+              </div>
+              <div class="cp-artwork-prose max-w-none">${a.description}</div>
+              <div>
+                <dl class="space-y-4">${detailsHtml(a.details)}</dl>
+              </div>
+            </div>
+          </div>`;
         overlay.hidden = false;
         document.body.classList.add('modal-open');
         if (push) history.pushState({ modal: 'artwork', slug }, '', `/artwork/${slug}/`);

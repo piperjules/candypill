@@ -8,6 +8,14 @@ body {
   font-family: "CandyPillSans", Arial, Helvetica, sans-serif;
 }
 
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+.cp-home-main {
+  padding-bottom: max(6rem, env(safe-area-inset-bottom, 0px));
+}
+
 .active-filter {
   background: #111827 !important;
   border-color: #111827 !important;
@@ -35,33 +43,87 @@ body {
   position: fixed;
   inset: 0;
   z-index: 80;
-  background: rgb(0 0 0 / 45%);
-  padding: 26px;
-  overflow: auto;
+  background: #fff;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
 }
 
 .cp-modal {
-  background: #fff;
-  max-width: 1200px;
-  margin: 24px auto;
-  border-radius: 12px;
-  box-shadow: 0 20px 60px rgb(0 0 0 / 25%);
-  padding: 20px;
+  background: transparent;
+  max-width: none;
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  box-shadow: none;
   position: relative;
 }
 
-.cp-close {
-  position: absolute;
-  right: 10px;
-  top: 8px;
-  border: 1px solid #d1d5db;
-  border-radius: 999px;
-  width: 32px;
-  height: 32px;
-  background: #fff;
-  font-size: 22px;
-  line-height: 1;
+.cp-close-og {
+  position: fixed;
+  top: calc(4.5rem + env(safe-area-inset-top, 0px));
+  right: max(1rem, env(safe-area-inset-right, 0px));
+  z-index: 90;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 9999px;
+  background: #000;
+  color: #fff;
   cursor: pointer;
+  box-shadow: 0 4px 14px rgb(0 0 0 / 18%);
+  transition: background-color 0.15s ease;
+}
+
+.cp-close-og:hover {
+  background: #1f2937;
+}
+
+.cp-close-og:focus-visible {
+  outline: 2px solid #111827;
+  outline-offset: 2px;
+}
+
+.cp-close-og-icon {
+  width: 1.15rem;
+  height: 1.15rem;
+  flex-shrink: 0;
+}
+
+@media (min-width: 640px) {
+  .cp-close-og {
+    top: calc(6rem + env(safe-area-inset-top, 0px));
+    right: max(2rem, env(safe-area-inset-right, 0px));
+  }
+}
+
+.cp-artwork-prose {
+  color: #111827;
+  font-size: 1rem;
+  line-height: 1.625;
+  max-width: 65ch;
+}
+
+.cp-modal-youtube {
+  width: 100%;
+  max-width: min(100%, 1200px);
+  aspect-ratio: 16 / 9;
+  max-height: min(80vh, 80dvh);
+  height: auto;
+  border: 0;
+  display: block;
+  background: #000;
+}
+
+.cp-modal-overlay dl dd {
+  margin: 0.15rem 0 0;
 }
 
 .cp-about h1 {
@@ -98,7 +160,22 @@ body {
 .about-layout {
   max-width: 1800px;
   margin: 0 auto;
-  padding: 115px 24px 48px;
+  padding: 6.5rem 1rem 2.5rem;
+  padding-left: max(1rem, env(safe-area-inset-left, 0px));
+  padding-right: max(1rem, env(safe-area-inset-right, 0px));
+  padding-bottom: max(2.5rem, env(safe-area-inset-bottom, 0px));
+}
+
+@media (min-width: 640px) {
+  .about-layout {
+    padding: 7.25rem 1.5rem 3rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .about-layout {
+    padding: 7.25rem 2rem 3rem;
+  }
 }
 
 .about-hero {
@@ -141,6 +218,7 @@ body {
 
 .about-music-links {
   display: flex;
+  flex-wrap: wrap;
   gap: 14px;
 }
 
@@ -157,11 +235,21 @@ body {
 .detail-main {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 28px 20px 60px;
+  padding: 5.5rem 1rem 3rem;
+  padding-left: max(1rem, env(safe-area-inset-left, 0px));
+  padding-right: max(1rem, env(safe-area-inset-right, 0px));
+}
+
+@media (min-width: 640px) {
+  .detail-main {
+    padding: 6.5rem 1.25rem 3.75rem;
+  }
 }
 
 .detail-header {
   display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 24px;
@@ -196,14 +284,18 @@ body {
 
 .detail-media {
   width: 100%;
+  max-height: min(80vh, 80dvh);
   height: auto;
   display: block;
   background: #f9fafb;
+  object-fit: contain;
 }
 
 .detail-iframe {
   aspect-ratio: 16 / 9;
-  min-height: 360px;
+  width: 100%;
+  max-height: min(80vh, 80dvh);
+  min-height: 200px;
 }
 
 .detail-meta h1 {
@@ -249,13 +341,23 @@ body {
     grid-template-columns: 1fr;
   }
 
-  .cp-modal-overlay {
-    padding: 10px;
+  .detail-meta h1 {
+    font-size: 1.65rem;
   }
 
-  .cp-modal {
-    margin: 6px auto;
-    padding: 14px;
+  .detail-nav {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 380px) {
+  .detail-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .detail-header .back-link {
+    text-align: center;
   }
 }
 
