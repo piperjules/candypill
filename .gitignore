@@ -1,0 +1,2 @@
+# Large raw meshes (GitHub file limit 100 MB); ship GLB instead.
+assets/models/*.obj

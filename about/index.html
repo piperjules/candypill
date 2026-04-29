@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>About - Candy Pill</title>
-    <meta name="description" content="About Candy Pill" />
+    <title>About - Piper Jules</title>
+    <meta name="description" content="About Piper Jules" />
     <link rel="stylesheet" href="../assets/fdba44fb78b772b2-51e687b4.css" />
     <link rel="stylesheet" href="../styles.css" />
   </head>
@@ -30,9 +30,15 @@
           <div class="about-portrait-wrap">
             <img src="../assets/images/piper-portrait.jpg" alt="Piper Jules" class="about-portrait" />
           </div>
-          <div class="about-heading">
-            <h1>Piper Jules</h1>
-            <h2>Candy Pill</h2>
+          <div class="about-heading-block">
+            <div class="about-heading">
+              <h1>Piper Jules</h1>
+              <p class="about-headline-email"><a href="mailto:piper@piperjules.com">piper@piperjules.com</a></p>
+            </div>
+            <p class="about-body-intro">
+              Want to collaborate or inquire about a piece of art? Email me at
+              <a href="mailto:piper@piperjules.com">piper@piperjules.com</a>.
+            </p>
           </div>
         </div>
 
@@ -91,9 +97,16 @@
           <li>2010 Riverdale Country School Museum, New York, NY</li>
         </ul>
 
+        <div class="about-model-section" aria-label="3D artwork">
+          <div class="about-model-frame">
+            <div id="about-model-root" class="about-model-root"></div>
+            <p id="about-model-loading" class="about-model-loading">Loading 3D preview…</p>
+          </div>
+          <p id="about-model-hint" class="about-model-hint" hidden>Drag to rotate · scroll to zoom</p>
+        </div>
+
         <section class="about-footer">
           <div>
-            <p>piperjulespill@gmail.com</p>
             <p>&copy; 2026 Piper Jules</p>
           </div>
           <div class="about-music-links">
@@ -105,5 +118,6 @@
       </section>
       </div>
     </main>
+    <script type="module" src="about-3d.js"></script>
   </body>
 </html>
