@@ -17,6 +17,59 @@ const PORTRAIT_MAT = {
   flatShading: false,
 };
 
+function canCreateWebGLContext() {
+  try {
+    const c = document.createElement('canvas');
+    return !!(
+      c.getContext('webgl2', { failIfMajorPerformanceCaveat: false }) ||
+      c.getContext('webgl', { failIfMajorPerformanceCaveat: false }) ||
+      c.getContext('experimental-webgl', { failIfMajorPerformanceCaveat: false })
+    );
+  } catch {
+    return false;
+  }
+}
+
+/** Try several option sets; high-performance is last — some GPUs only expose WebGL on default/low-power. */
+function createAboutRenderer() {
+  const optionSets = [
+    { antialias: true, alpha: false, powerPreference: 'default', failIfMajorPerformanceCaveat: false },
+    { antialias: false, alpha: false, powerPreference: 'default', failIfMajorPerformanceCaveat: false },
+    { antialias: true, alpha: false, powerPreference: 'low-power', failIfMajorPerformanceCaveat: false },
+    { antialias: false, alpha: false, powerPreference: 'low-power', failIfMajorPerformanceCaveat: false },
+    { antialias: true, alpha: false, powerPreference: 'high-performance', failIfMajorPerformanceCaveat: false },
+  ];
+  let lastErr;
+  for (const opts of optionSets) {
+    try {
+      const r = new THREE.WebGLRenderer(opts);
+      if (r.getContext()) return r;
+      r.dispose();
+    } catch (e) {
+      lastErr = e;
+    }
+  }
+  throw lastErr || new Error('WebGL unavailable');
+}
+
+function showWebGLUnavailable(loadingEl) {
+  if (!loadingEl) return;
+  loadingEl.classList.add('about-model-webgl-fail');
+  loadingEl.innerHTML =
+    '<span class="about-model-fail-title">3D needs WebGL</span>' +
+    '<span class="about-model-fail-body">This page couldn’t start the graphics engine. In Chrome: Settings → System → turn on “Use graphics acceleration when available,” then relaunch. On Safari, check that Web content isn’t blocked and try disabling content blockers for this site. You can also try Firefox or another browser.</span>';
+  loadingEl.removeAttribute('hidden');
+}
+
+/** Safari (and some mobile browsers) skip the first IntersectionObserver callback; scroll/resize + rAF cover that. */
+function isNodeNearViewport(el, marginPx = 160) {
+  if (!el) return false;
+  const r = el.getBoundingClientRect();
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+  return r.bottom > -marginPx && r.top < vh + marginPx && r.right > -marginPx && r.left < vw + marginPx;
+}
+
 function initAboutModel() {
   const root = document.getElementById('about-model-root');
   const loadingEl = document.getElementById('about-model-loading');
@@ -73,6 +126,19 @@ function initAboutModel() {
     return mat;
   }
 
+  if (!canCreateWebGLContext()) {
+    showWebGLUnavailable(loadingEl);
+    return;
+  }
+
+  let renderer;
+  try {
+    renderer = createAboutRenderer();
+  } catch {
+    showWebGLUnavailable(loadingEl);
+    return;
+  }
+
   const W = 300;
   const H = 300;
 
@@ -80,16 +146,6 @@ function initAboutModel() {
   scene.background = new THREE.Color(0xf4f5fb);
 
   const camera = new THREE.PerspectiveCamera(42, W / H, 0.1, 5000);
-  const renderer = new THREE.WebGLRenderer({
-    antialias: true,
-    alpha: false,
-    powerPreference: 'high-performance',
-    failIfMajorPerformanceCaveat: false,
-  });
-
-  if (!renderer.getContext()) {
-    throw new Error('WebGL context could not be created');
-  }
 
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
   renderer.setSize(W, H);
@@ -120,9 +176,25 @@ function initAboutModel() {
   draco.setDecoderPath(DRACO_PATH);
   loader.setDRACOLoader(draco);
 
+  let modelLoaded = false;
+  const loadTimeoutMs = 45000;
+  const loadTimer = window.setTimeout(() => {
+    if (modelLoaded) return;
+    console.warn('[about-3d] GLB load timed out');
+    if (loadingEl) {
+      loadingEl.classList.add('about-model-webgl-fail');
+      loadingEl.innerHTML =
+        '<span class="about-model-fail-title">3D preview didn’t finish loading</span>' +
+        '<span class="about-model-fail-body">Safari sometimes stalls on compressed 3D assets. Try a refresh, disable content blockers for this site, or open the page in Chrome or Firefox. If you’re on a slow connection, wait a bit longer.</span>';
+      loadingEl.removeAttribute('hidden');
+    }
+  }, loadTimeoutMs);
+
   loader.load(
     MODEL_PATH,
     (gltf) => {
+      modelLoaded = true;
+      window.clearTimeout(loadTimer);
       const model = gltf.scene;
       portraitMaterial = applyPortraitLook(model);
       scene.add(model);
@@ -134,6 +206,8 @@ function initAboutModel() {
     },
     undefined,
     (err) => {
+      modelLoaded = true;
+      window.clearTimeout(loadTimer);
       console.error('[about-3d] GLB load failed', err);
       if (loadingEl) {
         loadingEl.textContent = '3D model could not be loaded.';
@@ -164,23 +238,40 @@ function initAboutModel() {
 const root = document.getElementById('about-model-root');
 if (root) {
   let started = false;
+
+  function startAboutModel() {
+    if (started) return;
+    started = true;
+    io.disconnect();
+    window.removeEventListener('scroll', tryStart, { capture: false });
+    window.removeEventListener('resize', tryStart, { capture: false });
+    try {
+      initAboutModel();
+    } catch (err) {
+      console.error('[about-3d] init failed', err);
+      showWebGLUnavailable(document.getElementById('about-model-loading'));
+    }
+  }
+
+  function tryStart() {
+    if (started) return;
+    if (isNodeNearViewport(root)) startAboutModel();
+  }
+
   const io = new IntersectionObserver(
     (entries) => {
-      if (!entries[0].isIntersecting || started) return;
-      started = true;
-      io.disconnect();
-      try {
-        initAboutModel();
-      } catch (err) {
-        console.error('[about-3d] init failed', err);
-        const loadingEl = document.getElementById('about-model-loading');
-        if (loadingEl) {
-          loadingEl.textContent = '3D preview could not start.';
-          loadingEl.removeAttribute('hidden');
-        }
-      }
+      const e = entries[0];
+      if (!e || !e.isIntersecting || started) return;
+      startAboutModel();
     },
-    { rootMargin: '100px' }
+    { rootMargin: '120px', threshold: 0 }
   );
   io.observe(root);
+
+  // Safari: IO may not fire when the section becomes visible; scroll/resize + rAF catch that.
+  window.addEventListener('scroll', tryStart, { passive: true });
+  window.addEventListener('resize', tryStart, { passive: true });
+  requestAnimationFrame(() => {
+    requestAnimationFrame(tryStart);
+  });
 }

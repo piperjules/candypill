@@ -261,6 +261,28 @@ html {
   pointer-events: none;
 }
 
+.about-model-loading.about-model-webgl-fail {
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+  text-align: center;
+  pointer-events: auto;
+  font-size: 12px;
+  line-height: 1.45;
+  color: #475569;
+}
+
+.about-model-fail-title {
+  display: block;
+  font-weight: 600;
+  color: #334155;
+  font-size: 13px;
+}
+
+.about-model-fail-body {
+  display: block;
+}
+
 .about-model-hint {
   margin: 0;
   font-size: 12px;
