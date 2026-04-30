@@ -1,11 +1,7 @@
-@font-face {
-  font-family: "CandyPillSans";
-  src: url("./assets/a34f9d1faa5f3315-s.p-658c9f47.woff2") format("woff2");
-  font-display: swap;
-}
-
+/* Custom @font-face removed: file was not in repo (404). Tailwind bundle in
+   assets/fdba…css loads Inter from /_next/static/media/… (see _next/static/). */
 body {
-  font-family: "CandyPillSans", Arial, Helvetica, sans-serif;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
 }
 
 html {
