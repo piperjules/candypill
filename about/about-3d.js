@@ -1,5 +1,14 @@
-/** Optimized portrait (~1.4 MB, Draco + simplified mesh); same midnight-blue material as before. */
+/**
+ * Self-hosted Three.js + Draco (no CDN dynamic import) so CSP / ad blockers
+ * cannot block the 3D preview on production.
+ */
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
 const MODEL_PATH = new URL('../assets/models/midnight-portrait-about.glb', import.meta.url).href;
+const DRACO_PATH = new URL('../assets/vendor/draco/gltf/', import.meta.url).href;
 
 const PORTRAIT_MAT = {
   color: 0x2a3f6f,
@@ -8,11 +17,11 @@ const PORTRAIT_MAT = {
   flatShading: false,
 };
 
-async function initAboutModel() {
-  const THREE = await import('https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js');
-  const { GLTFLoader } = await import('https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/GLTFLoader.js');
-  const { DRACOLoader } = await import('https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/DRACOLoader.js');
-  const { OrbitControls } = await import('https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/controls/OrbitControls.js');
+function initAboutModel() {
+  const root = document.getElementById('about-model-root');
+  const loadingEl = document.getElementById('about-model-loading');
+  const hintEl = document.getElementById('about-model-hint');
+  if (!root) return;
 
   function fitObjectToView(object, camera, size = 1.6) {
     const box = new THREE.Box3().setFromObject(object);
@@ -64,11 +73,6 @@ async function initAboutModel() {
     return mat;
   }
 
-  const root = document.getElementById('about-model-root');
-  const loadingEl = document.getElementById('about-model-loading');
-  const hintEl = document.getElementById('about-model-hint');
-  if (!root) return;
-
   const W = 300;
   const H = 300;
 
@@ -82,6 +86,11 @@ async function initAboutModel() {
     powerPreference: 'high-performance',
     failIfMajorPerformanceCaveat: false,
   });
+
+  if (!renderer.getContext()) {
+    throw new Error('WebGL context could not be created');
+  }
+
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
   renderer.setSize(W, H);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -108,7 +117,7 @@ async function initAboutModel() {
 
   const loader = new GLTFLoader();
   const draco = new DRACOLoader();
-  draco.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.6/');
+  draco.setDecoderPath(DRACO_PATH);
   loader.setDRACOLoader(draco);
 
   loader.load(
@@ -160,14 +169,16 @@ if (root) {
       if (!entries[0].isIntersecting || started) return;
       started = true;
       io.disconnect();
-      initAboutModel().catch((err) => {
+      try {
+        initAboutModel();
+      } catch (err) {
         console.error('[about-3d] init failed', err);
         const loadingEl = document.getElementById('about-model-loading');
         if (loadingEl) {
           loadingEl.textContent = '3D preview could not start.';
           loadingEl.removeAttribute('hidden');
         }
-      });
+      }
     },
     { rootMargin: '100px' }
   );
