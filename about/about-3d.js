@@ -1,5 +1,5 @@
-/** Same midnight-blue look as the OBJ viewer: flat MeshStandard, no baked GLB textures. */
-const MODEL_PATH = new URL('../assets/models/Meshy_AI_Midnight_Blue_Portrai_0428184523_texture.glb', import.meta.url).href;
+/** Optimized portrait (~1.4 MB, Draco + simplified mesh); same midnight-blue material as before. */
+const MODEL_PATH = new URL('../assets/models/midnight-portrait-about.glb', import.meta.url).href;
 
 const PORTRAIT_MAT = {
   color: 0x2a3f6f,
@@ -76,7 +76,12 @@ async function initAboutModel() {
   scene.background = new THREE.Color(0xf4f5fb);
 
   const camera = new THREE.PerspectiveCamera(42, W / H, 0.1, 5000);
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+  const renderer = new THREE.WebGLRenderer({
+    antialias: true,
+    alpha: false,
+    powerPreference: 'high-performance',
+    failIfMajorPerformanceCaveat: false,
+  });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
   renderer.setSize(W, H);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -119,7 +124,8 @@ async function initAboutModel() {
       if (hintEl) hintEl.hidden = false;
     },
     undefined,
-    () => {
+    (err) => {
+      console.error('[about-3d] GLB load failed', err);
       if (loadingEl) {
         loadingEl.textContent = '3D model could not be loaded.';
         loadingEl.removeAttribute('hidden');
@@ -154,7 +160,8 @@ if (root) {
       if (!entries[0].isIntersecting || started) return;
       started = true;
       io.disconnect();
-      initAboutModel().catch(() => {
+      initAboutModel().catch((err) => {
+        console.error('[about-3d] init failed', err);
         const loadingEl = document.getElementById('about-model-loading');
         if (loadingEl) {
           loadingEl.textContent = '3D preview could not start.';
